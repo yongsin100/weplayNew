@@ -1,7 +1,10 @@
 package com.weplayNew;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
@@ -12,16 +15,48 @@ import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.Toast;
+
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.messaging.FirebaseMessaging;
+
+import java.time.Clock;
 
 public class MainActivity extends AppCompatActivity {
 
     private WebView web;
     private String url = "http://weplay.pe.kr/";
+    /*private String CHANNEL_ID = "channel_id_test";*/
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        /*createNotificationChannel();    // 채널생성*/
+
+        FirebaseMessaging.getInstance().getToken()
+                .addOnCompleteListener(new OnCompleteListener<String>() {
+                    @Override
+                    public void onComplete(@NonNull Task<String> task) {
+                        if (!task.isSuccessful()) {
+                            System.out.println("========== Fetching FCM registration token failed ==========" + task.getException());
+                            return;
+                        }
+
+                        // Get new FCM registration token
+                        String token = task.getResult();
+
+                        // Log and toast
+                        /*String msg = getString(R.string.msg_token_fmt, token);*/
+                        System.out.println(" ========== token ==========" + token);
+                        /*Log.d(TAG, msg);*/
+                        /*Toast.makeText(MainActivity.this, msg, Toast.LENGTH_SHORT).show();*/
+                        Toast.makeText(MainActivity.this, "Your Device registration token is " + token, Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+
         web = (WebView) findViewById(R.id.webView);
         /* 웹 세팅 작업하기 */
         WebSettings webSettings = web.getSettings();
@@ -39,51 +74,30 @@ public class MainActivity extends AppCompatActivity {
             webSettings.setMixedContentMode(WebSettings.MIXED_CONTENT_ALWAYS_ALLOW);
         }
 
-        web.loadUrl(url);
-        web.setWebViewClient(new WebViewClientClass());
+
+        web.setWebViewClient(new WebViewClient());
         web.setWebChromeClient(new WebChromeClient());
-
+        web.loadUrl(url);
     }
 
-    private class WebViewClientClass extends WebViewClient{
-        @Override
-        public boolean shouldOverrideUrlLoading(WebView view, String url) {
-            //Log.e("url : ",url);
-
-            try {
-                /**
-                 * 카카오링크 오류 수정을 위해 아래 if문을 추가함.
-                 */
-                Log.v("TESTTESTTESTTESTTEST1 ", url);
-                if (url != null && url.startsWith("intent:kakaolink:")) {
-                    try {
-                        Log.v("TESTTESTTESTTESTTEST2 ", url);
-                        Intent intent = Intent.parseUri(url, Intent.URI_INTENT_SCHEME);
-                        Intent existPackage = getPackageManager().getLaunchIntentForPackage(intent.getPackage());
-                        Log.v("TESTTESTTESTTESTTEST3 ", existPackage.toString());
-                        if (existPackage != null) {
-                            startActivity(intent);
-                        } else {
-                            Intent marketIntent = new Intent(Intent.ACTION_VIEW);
-                            marketIntent.setData(Uri.parse("market://details?id=" + intent.getPackage()));
-                            startActivity(marketIntent);
-                        }
-                        Log.v("TESTTESTTESTTESTTEST4 ", url);
-                        view.loadUrl(url);
-                        return true;
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
-                return false;
-            }
-            return false;
+    // 채널 생성
+    /*private void createNotificationChannel() {
+        // 채널 만들기
+        // Create the NotificationChannel, but only on API 26+ because
+        // the NotificationChannel class is new and not in the support library
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            CharSequence name = getString(R.string.channel_name);
+            String description = getString(R.string.channel_description);
+            int importance = NotificationManager.IMPORTANCE_DEFAULT;
+            NotificationChannel channel = new NotificationChannel(CHANNEL_ID, name, importance);
+            channel.setDescription(description);
+            // 시스템에 채널 등록하기.
+            // Register the channel with the system; you can't change the importance
+            // or other notification behaviors after this
+            NotificationManager notificationManager = getSystemService(NotificationManager.class);
+            notificationManager.createNotificationChannel(channel);
         }
-
-    }
-
+    }*/
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
@@ -95,6 +109,9 @@ public class MainActivity extends AppCompatActivity {
         }
         return super.onKeyDown(keyCode, event);
     }
+
+
+
 
 
 }
