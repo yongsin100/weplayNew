@@ -47,12 +47,15 @@ public class MainActivity extends AppCompatActivity {
                         // Get new FCM registration token
                         String token = task.getResult();
 
+
+
                         // Log and toast
                         /*String msg = getString(R.string.msg_token_fmt, token);*/
                         System.out.println(" ========== token ==========" + token);
                         /*Log.d(TAG, msg);*/
                         /*Toast.makeText(MainActivity.this, msg, Toast.LENGTH_SHORT).show();*/
                         Toast.makeText(MainActivity.this, "Your Device registration token is " + token, Toast.LENGTH_SHORT).show();
+                        FirebaseMessaging.getInstance().subscribeToTopic("ALL");
                     }
                 });
 

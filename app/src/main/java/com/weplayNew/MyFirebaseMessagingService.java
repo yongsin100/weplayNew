@@ -4,6 +4,7 @@ import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
@@ -16,9 +17,11 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
         super.onMessageReceived(remoteMessage);
+        Log.d(TAG, "================= onMessageReceived ===================");
         // 앱이 실행 중일 때 (Foreground 상황) 에서 푸쉬를 받으면 호출됩니다. // 백그라운드 상황에서는 호출되지 않고 그냥 알림목록에 알림이 추가됩니다. Log.d(TAG,"Message Arrived");
         if ( remoteMessage.getData().size() > 0 ) {
-            Log.d(TAG, "FCM Data Message : " + remoteMessage.getData());
+            Log.d(TAG, "FCM Data Message : " + remoteMessage    .getData());
+
         }
         if ( remoteMessage.getNotification() != null ) {
             final String messageBody = remoteMessage.getNotification().getBody();
@@ -31,7 +34,35 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                 }
             });
         }
+
     }
+
+   /* private void sendNotification(RemoteMessage remoteMessage) {
+        Intent intent = new Intent(this, MainActivity.class);
+        PendingIntent pendingIntent =PendingIntent.getActivity(this,
+                m,intent,PendingIntent.FLAG_ONE_SHOT);
+        String channelId =    getString(R.string.default_notification_channel_id);
+        Uri defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+        NotificationCompat.Builder notificationBuilder;
+        notificationBuilder =
+                new NotificationCompat.Builder(this, channelId)
+                        .setSmallIcon(R.drawable.geekhaven_transparent)
+                        .setContentTitle(remoteMessage.getNotification.getTitle)
+                        .setContentText(remoteMessage.getNotification.getBody)
+                        .setAutoCancel(true)
+                        .setSound(defaultSoundUri)
+                        .setContentIntent(pendingIntent);
+        NotificationManager notificationManager =
+                (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+
+// Since android Oreo notification channel is needed.
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            NotificationChannel channel = new NotificationChannel(channelId,
+                    "Channel human readable title",
+                    NotificationManager.IMPORTANCE_DEFAULT);
+            notificationManager.createNotificationChannel(channel);
+        }
+        notificationManager.notify(m, notificationBuilder.build());*/
 
     @Override
     public void onNewToken(String token) {
