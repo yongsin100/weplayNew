@@ -71,7 +71,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         // Keep the splash screen visible for this Activity
-        splashScreen.setKeepOnScreenCondition(() -> true );
+        //splashScreen.setKeepOnScreenCondition(() -> true );
         //startSomeNextActivity();
 
         web.setWebViewClient(new WebViewClient());
