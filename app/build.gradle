@@ -45,4 +45,5 @@ dependencies {
     implementation 'com.google.firebase:firebase-messaging'
     implementation 'com.google.firebase:firebase-analytics'
     implementation 'com.google.firebase:firebase-inappmessaging-display'
+    implementation 'androidx.core:core-splashscreen:1.0.0-beta02'
 }
