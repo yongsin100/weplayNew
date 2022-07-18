@@ -1,5 +1,4 @@
 <resources>
-    <string name="app_name">weplayNew</string>
-    <string name="channel_name">channel_test</string>
-    <string name="channel_description">channel_description_test</string>
+    <string name="app_name">위플레이</string>
+    <string name="default_notification_channel_id">weplayAll</string>
 </resources>
