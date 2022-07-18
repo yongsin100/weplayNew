@@ -1,33 +1,33 @@
 {
   "project_info": {
-    "project_number": "528932392900",
-    "project_id": "weplaynew-107a6",
-    "storage_bucket": "weplaynew-107a6.appspot.com"
+    "project_number": "600751503788",
+    "project_id": "welay-ad669",
+    "storage_bucket": "welay-ad669.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:528932392900:android:e1a350ac0b1710a7731e91",
+        "mobilesdk_app_id": "1:600751503788:android:e1adff330d9ddb0dfb6209",
         "android_client_info": {
           "package_name": "com.weplayNew"
         }
       },
       "oauth_client": [
         {
-          "client_id": "528932392900-8tsv2ts13snpbv050r1ai754ae52qtsc.apps.googleusercontent.com",
+          "client_id": "600751503788-vh7stdrnc0hgbvcv0ahbruoc5ee0pl85.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyAHOqDGZRdZ6Er6x43GFbz3EUG_NKdOE_M"
+          "current_key": "AIzaSyAiXvRvFSiAH53IRt4WeqQQYc11WrkILj8"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "528932392900-8tsv2ts13snpbv050r1ai754ae52qtsc.apps.googleusercontent.com",
+              "client_id": "600751503788-vh7stdrnc0hgbvcv0ahbruoc5ee0pl85.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

@@ -4,11 +4,16 @@ import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 
 import android.annotation.SuppressLint;
+import android.app.Notification;
 import android.content.Intent;
 import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
 import android.widget.Toast;
+
+import androidx.core.app.NotificationCompat;
 
 public class MyFirebaseMessagingService extends FirebaseMessagingService {
     private static final String TAG = "MyFirebaseMessagingService";
@@ -19,12 +24,26 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         super.onMessageReceived(remoteMessage);
         Log.d(TAG, "================= onMessageReceived ===================");
         // 앱이 실행 중일 때 (Foreground 상황) 에서 푸쉬를 받으면 호출됩니다. // 백그라운드 상황에서는 호출되지 않고 그냥 알림목록에 알림이 추가됩니다. Log.d(TAG,"Message Arrived");
-        if ( remoteMessage.getData().size() > 0 ) {
+        /*if ( remoteMessage.getData().size() > 0 ) {
             Log.d(TAG, "FCM Data Message : " + remoteMessage    .getData());
 
-        }
+        }*/
         if ( remoteMessage.getNotification() != null ) {
-            final String messageBody = remoteMessage.getNotification().getBody();
+            Notification notification = new NotificationCompat.Builder(this, "ALL")
+                    .setSmallIcon(R.mipmap.ic_launcher_round)
+                    .setContentTitle(remoteMessage.getNotification().getTitle())
+                    .setContentText(remoteMessage.getNotification().getBody())
+                    /*.setLargeIcon(remoteMessage.getNotification().getImageUrl())*/
+                    /*.setStyle(new NotificationCompat.BigPictureStyle()
+                            .bigPicture(myBitmap)
+                            .bigLargeIcon(null))*/
+                    .build();
+           /* Notification.Builder notificationBuilder = new Notification.Builder()
+                    .set
+
+            NotificationCompat.Builder notificationBuilder =new NotificationCompat.Builder()
+                    .set*/
+            /*final String messageBody = remoteMessage.getNotification().getBody();
             Log.d(TAG, "FCM Notification Message Body : " + messageBody);
             Handler handler = new Handler(Looper.getMainLooper());
             handler.post(new Runnable() {
@@ -32,18 +51,18 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                 public void run() {
                     Toast.makeText(getApplicationContext(), messageBody, Toast.LENGTH_SHORT).show();
                 }
-            });
+            });*/
         }
 
     }
 
-   /* private void sendNotification(RemoteMessage remoteMessage) {
+       /* private void sendNotification(RemoteMessage remoteMessage) {
         Intent intent = new Intent(this, MainActivity.class);
         PendingIntent pendingIntent =PendingIntent.getActivity(this,
                 m,intent,PendingIntent.FLAG_ONE_SHOT);
         String channelId =    getString(R.string.default_notification_channel_id);
         Uri defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
-        NotificationCompat.Builder notificationBuilder;
+        NotificationCompat.Builder notificationBuilder =
         notificationBuilder =
                 new NotificationCompat.Builder(this, channelId)
                         .setSmallIcon(R.drawable.geekhaven_transparent)

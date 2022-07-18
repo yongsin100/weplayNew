@@ -27,34 +27,25 @@ public class MainActivity extends AppCompatActivity {
 
     private WebView web;
     private String url = "http://weplay.pe.kr/";
-    /*private String CHANNEL_ID = "channel_id_test";*/
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        /*createNotificationChannel();    // 채널생성*/
 
         FirebaseMessaging.getInstance().getToken()
                 .addOnCompleteListener(new OnCompleteListener<String>() {
                     @Override
                     public void onComplete(@NonNull Task<String> task) {
                         if (!task.isSuccessful()) {
-                            System.out.println("========== Fetching FCM registration token failed ==========" + task.getException());
+                            //System.out.println("========== Fetching FCM registration token failed ==========" + task.getException());
                             return;
                         }
 
                         // Get new FCM registration token
                         String token = task.getResult();
 
-
-
-                        // Log and toast
-                        /*String msg = getString(R.string.msg_token_fmt, token);*/
-                        System.out.println(" ========== token ==========" + token);
-                        /*Log.d(TAG, msg);*/
-                        /*Toast.makeText(MainActivity.this, msg, Toast.LENGTH_SHORT).show();*/
-                        Toast.makeText(MainActivity.this, "Your Device registration token is " + token, Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(MainActivity.this, "Your Device registration token is " + token, Toast.LENGTH_SHORT).show();
                         FirebaseMessaging.getInstance().subscribeToTopic("ALL");
                     }
                 });
@@ -83,25 +74,6 @@ public class MainActivity extends AppCompatActivity {
         web.loadUrl(url);
     }
 
-    // 채널 생성
-    /*private void createNotificationChannel() {
-        // 채널 만들기
-        // Create the NotificationChannel, but only on API 26+ because
-        // the NotificationChannel class is new and not in the support library
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            CharSequence name = getString(R.string.channel_name);
-            String description = getString(R.string.channel_description);
-            int importance = NotificationManager.IMPORTANCE_DEFAULT;
-            NotificationChannel channel = new NotificationChannel(CHANNEL_ID, name, importance);
-            channel.setDescription(description);
-            // 시스템에 채널 등록하기.
-            // Register the channel with the system; you can't change the importance
-            // or other notification behaviors after this
-            NotificationManager notificationManager = getSystemService(NotificationManager.class);
-            notificationManager.createNotificationChannel(channel);
-        }
-    }*/
-
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
@@ -112,9 +84,4 @@ public class MainActivity extends AppCompatActivity {
         }
         return super.onKeyDown(keyCode, event);
     }
-
-
-
-
-
 }
