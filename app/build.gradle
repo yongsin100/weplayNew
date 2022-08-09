@@ -10,8 +10,8 @@ android {
         applicationId "com.weplayNew"
         minSdk 21
         targetSdk 32
-        versionCode 4
-        versionName "4.0"
+        versionCode 5
+        versionName "5.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -46,4 +46,7 @@ dependencies {
     implementation 'com.google.firebase:firebase-analytics'
     implementation 'com.google.firebase:firebase-inappmessaging-display'
     implementation 'androidx.core:core-splashscreen:1.0.0-beta02'
+
+    implementation 'com.kakao.sdk:v2-user:2.11.0'   // 카카오 로그인
+    implementation 'com.kakao.sdk:v2-share:2.11.0'  // 메시지(카카오톡 공유)
 }
